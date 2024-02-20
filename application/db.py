@@ -9,5 +9,5 @@ DATABASE = 'DB.db'
 
 def create_db(DBNAME):#任意のテーブルを作成する関数
     con=sqlite3.connect(DATABASE)
-    con.execute("CREATE TABLE IF NOT EXISTS %s (day ,condition)" % DBNAME)
+    con.execute("CREATE TABLE IF NOT EXISTS %s (time ,condition)" % DBNAME)
     con.close()
