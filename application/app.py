@@ -13,7 +13,7 @@ import db
 
 app = Flask(__name__)
 
-DBTABLE = ("sample1","sample2")# <---------   ここに場所追加
+DBTABLE = ("sample1","sample2","sample3")# <---------   ここに場所追加
 TXT_LOG = 'history.log'
 DATABASE = 'DB.db'
 
@@ -24,19 +24,18 @@ for NAME in DBTABLE:
 
 @app.route("/", methods=["GET"])#トップページ表示
 def top():
-    WriteLog("GET","---","connect web site.")
-    NAME="sample1"#欲しいデータのテーブル名 ((DBNAMEで設定した中から))
+    PLACE="sample1"#欲しいデータのテーブル名 ((DBNAMEで設定した中から))
 
     con = sqlite3.connect(DATABASE)
-    db_data = con.execute("SELECT * FROM %s where time = '2024/02/18 15:36:32'" % NAME).fetchall()
+    db_data = con.execute("SELECT * FROM %s where time = '2024/02/20 19:51:10'" % PLACE).fetchall()
     con.close()
 
     data = []
     for row in db_data:
-        data.append({"time": row[0], "condition": row[1]})
-    print(data)
+        data.append({"time": row[1], "condition": row[2]})
+    WriteLog("GET","---","connect web site.")
     return render_template("home.html" , get_data=data)
-#dataの構成は   [{ "day" : '' , "condition" : '' },{ "day" : '' , "condition" : '' }........]
+#dataの構成は   [{ "time" : '' , "condition" : '' },{ "time" : '' , "condition" : '' }........]
 
 
 #####################################################################################################################################################################
@@ -46,19 +45,48 @@ def top():
 
 @app.route("/sample1",methods=['GET','POST'])
 def sample1():
+    PLACE="sample1"#欲しいデータのテーブル名 ((DBNAMEで設定した中から))
+    data = []
     if request.method=='POST':
 
-        NAME="sample1"#欲しいデータのテーブル名 ((DBNAMEで設定した中から))
-        TIME='2024/02/18 15:36:32'#欲しい時間を指定
+
+#####################################################################################################
+######################## この間の文を複製することで任意の数の時刻のデータを取得 ########################
+
+
+        TIME='2024/02/20 21:23:56'#欲しい時間を指定
 
         con = sqlite3.connect(DATABASE)
-        db_data = con.execute("SELECT * FROM ? where time = ? " (NAME,TIME)).fetchall()
+        db_data = con.execute("SELECT * FROM %s where time = ? " % PLACE, (TIME,)).fetchall()
+        con.close()
+
+        data.append({"time": db_data[0][1], "condition": db_data[0][2]})
+
+######################## この間の文を複製することで任意の数の時刻のデータを取得 ########################
+####################################################################################################
+
+
+
+        WriteLog("POST","sample1","connect web site.")
+        return render_template("sample1.html" , get_data=data)#アクセスするhtmlファイルを設定
+    else:
+
+######################## ""GET""メソッドでアクセスされたら最新のものを取得 ########################
+
+
+        con = sqlite3.connect(DATABASE)
+        latest = con.execute("SELECT max(ID) from %s" % PLACE).fetchall()
+        con.close()
+        con = sqlite3.connect(DATABASE)
+        db_data = con.execute("SELECT * FROM %s where ID = ? " % PLACE , (latest[0][0],)).fetchall()
         con.close()
 
 
 
-
-
+        data.append({"time": db_data[0][1], "condition": db_data[0][2]})
+        print(data)
+        WriteLog("GET","sample1","connect web site.")
+        return render_template("sample1.html" , get_data=data)#アクセスするhtmlファイルを設定
 
 
 
@@ -72,29 +100,29 @@ def sample1():
 @app.route("/write_date/ここはデータベース書き込み用のURLです", methods=["POST"])#DB書き込み
 def write_date():
     try:
-        #ここはデータの受け取り方によって """place""" , """condition""" を書き換える
+        #ここはデータの受け取り方によって """PLACE""" , """condition""" を書き換える
 
 
         #maybe 画像検出用の.pyファイルがあるならimport文でヨシ
         #      リクエスト受けて書き込むなら
-        #      data = request.get_json()
-        #      place = data.get("place", "default_place")
-        #      condition = data.get("condition", "default_condition")
+        data = request.get_json()
+        PLACE = data.get("place", "default_PLACE")
+        condition = data.get("condition", "default_condition")
 
 
 ###################################################################################
 ################################   ただしjson形式   ################################
 ####################################################################################
 
-        place = "place"
-        condition ="condition"
+        #PLACE = "place"
+        #condition ="condition"
         time = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')
 
-        WriteData(place,time,condition)
-        WriteLog("POST",place,"add DATA success!")
+        WriteData(PLACE,time,condition)
+        WriteLog("POST",PLACE,"add DATA success!")
         return jsonify({"result": True})
     except:
-        WriteLog("POST",place,"add DATA error.")
+        WriteLog("POST",PLACE,"add DATA error.")
         return jsonify({"result": False})
 
 
@@ -107,7 +135,7 @@ def WriteLog(place,type,Message):#LOG書き込み関数
 
 def WriteData(place,time,condition):#DB書き込み関数
     con = sqlite3.connect(DATABASE)
-    con.execute("INSERT INTO %s VALUES (?, ?)" % place, (time,condition))
+    con.execute("INSERT INTO %s (time ,condition) VALUES (?, ?)" % place, (time,condition))
     con.commit()
     con.close()
 
