@@ -2,6 +2,7 @@ from flask import Flask, render_template, request,redirect,url_for,jsonify
 import sqlite3
 import datetime
 import db
+import func
 
 # .venv\Scripts\activate.bat 有効化
 
@@ -9,6 +10,11 @@ import db
 #####################################################################################################################################################################
 ##################################################################   これはFlaskのメインファイルです   ################################################################
 #####################################################################################################################################################################
+
+
+
+"""  dataの構成は   [{ "time" : '' , "condition" : '' },{ "time" : '' , "condition" : '' }........]  """
+
 
 
 app = Flask(__name__)
@@ -33,9 +39,8 @@ def top():
     data = []
     for row in db_data:
         data.append({"time": row[1], "condition": row[2]})
-    WriteLog("GET","---","connect web site.")
+    func.WriteLog("GET","/","connect web site.")
     return render_template("home.html" , get_data=data)
-#dataの構成は   [{ "time" : '' , "condition" : '' },{ "time" : '' , "condition" : '' }........]
 
 
 #####################################################################################################################################################################
@@ -49,48 +54,24 @@ def sample1():
     data = []
     if request.method=='POST':
 
-
 #####################################################################################################
 ######################## この間の文を複製することで任意の数の時刻のデータを取得 ########################
 
-
-        TIME='2024/02/20 21:23:56'#欲しい時間を指定
-
-        con = sqlite3.connect(DATABASE)
-        db_data = con.execute("SELECT * FROM %s where time = ? " % PLACE, (TIME,)).fetchall()
-        con.close()
-
-        data.append({"time": db_data[0][1], "condition": db_data[0][2]})
+        TIME='2024/02/21 13:03:03'#欲しい時間を指定
+        data = func.receiveData(PLACE,TIME,data)
 
 ######################## この間の文を複製することで任意の数の時刻のデータを取得 ########################
 ####################################################################################################
 
-
-
-        WriteLog("POST","sample1","connect web site.")
+        func.WriteLog("POST","/sample1","connect web site.")
         return render_template("sample1.html" , get_data=data)#アクセスするhtmlファイルを設定
     else:
 
-######################## ""GET""メソッドでアクセスされたら最新のものを取得 ########################
+        """"""""""""""""""""""""" '''GET'''メソッドでアクセスされたら最新のものを取得 """""""""""""""""""""""""
 
-
-        con = sqlite3.connect(DATABASE)
-        latest = con.execute("SELECT max(ID) from %s" % PLACE).fetchall()
-        con.close()
-        con = sqlite3.connect(DATABASE)
-        db_data = con.execute("SELECT * FROM %s where ID = ? " % PLACE , (latest[0][0],)).fetchall()
-        con.close()
-
-
-
-        data.append({"time": db_data[0][1], "condition": db_data[0][2]})
-        print(data)
-        WriteLog("GET","sample1","connect web site.")
+        func.receiveData_latest(PLACE,data)
+        func.WriteLog("GET","/sample1","connect web site.")
         return render_template("sample1.html" , get_data=data)#アクセスするhtmlファイルを設定
-
-
-
-
 
 
 #####################################################################################################################################################################
@@ -118,26 +99,15 @@ def write_date():
         #condition ="condition"
         time = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')
 
-        WriteData(PLACE,time,condition)
-        WriteLog("POST",PLACE,"add DATA success!")
+        func.WriteData(PLACE,time,condition)
+        func.WriteLog("POST","/"+PLACE,"add DATA success!")
         return jsonify({"result": True})
     except:
-        WriteLog("POST",PLACE,"add DATA error.")
+        func.WriteLog("POST","/"+PLACE,"add DATA error.")
         return jsonify({"result": False})
 
 
 
-def WriteLog(place,type,Message):#LOG書き込み関数
-    now = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')
-    f = open(TXT_LOG, 'a')
-    f.write(f'{now} || {type.ljust(20)}| {place.ljust(15)}| {Message}\n')
-    f.close()
-
-def WriteData(place,time,condition):#DB書き込み関数
-    con = sqlite3.connect(DATABASE)
-    con.execute("INSERT INTO %s (time ,condition) VALUES (?, ?)" % place, (time,condition))
-    con.commit()
-    con.close()
 
 
 if __name__ == "__main__":  #Flask起動
