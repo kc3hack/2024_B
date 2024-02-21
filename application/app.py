@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request,redirect,url_for,jsonify
 import sqlite3
 import datetime
-import db
 import func
 
 # .venv\Scripts\activate.bat 有効化
@@ -25,7 +24,7 @@ DATABASE = 'DB.db'
 
 
 for NAME in DBTABLE:
-    db.create_db(NAME)
+    func.create_db(NAME)
 
 
 @app.route("/", methods=["GET"])#トップページ表示
@@ -73,6 +72,57 @@ def sample1():
         func.WriteLog("GET","/sample1","connect web site.")
         return render_template("sample1.html" , get_data=data)#アクセスするhtmlファイルを設定
 
+
+@app.route("/sample2",methods=['GET','POST'])
+def sample2():
+    PLACE="sample2"#欲しいデータのテーブル名 ((DBNAMEで設定した中から))
+    data = []
+    if request.method=='POST':
+
+#####################################################################################################
+######################## この間の文を複製することで任意の数の時刻のデータを取得 ########################
+
+        TIME='2024/02/21 13:03:17'#欲しい時間を指定
+        data = func.receiveData(PLACE,TIME,data)
+
+######################## この間の文を複製することで任意の数の時刻のデータを取得 ########################
+####################################################################################################
+
+        func.WriteLog("POST","/sample2","connect web site.")
+        return render_template("sample2.html" , get_data=data)#アクセスするhtmlファイルを設定
+    else:
+
+        """"""""""""""""""""""""" '''GET'''メソッドでアクセスされたら最新のものを取得 """""""""""""""""""""""""
+
+        func.receiveData_latest(PLACE,data)
+        func.WriteLog("GET","/sample2","connect web site.")
+        return render_template("sample2.html" , get_data=data)#アクセスするhtmlファイルを設定
+
+
+@app.route("/sample3",methods=['GET','POST'])
+def sample3():
+    PLACE="sample3"#欲しいデータのテーブル名 ((DBNAMEで設定した中から))
+    data = []
+    if request.method=='POST':
+
+#####################################################################################################
+######################## この間の文を複製することで任意の数の時刻のデータを取得 ########################
+
+        TIME='2024/02/21 13:03:27'#欲しい時間を指定
+        data = func.receiveData(PLACE,TIME,data)
+
+######################## この間の文を複製することで任意の数の時刻のデータを取得 ########################
+####################################################################################################
+
+        func.WriteLog("POST","/sample3","connect web site.")
+        return render_template("sample3.html" , get_data=data)#アクセスするhtmlファイルを設定
+    else:
+
+        """"""""""""""""""""""""" '''GET'''メソッドでアクセスされたら最新のものを取得 """""""""""""""""""""""""
+
+        func.receiveData_latest(PLACE,data)
+        func.WriteLog("GET","/sample3","connect web site.")
+        return render_template("sample3.html" , get_data=data)#アクセスするhtmlファイルを設定
 
 #####################################################################################################################################################################
 ##################################################################   以上にルーティングする場所を追加   ###############################################################
