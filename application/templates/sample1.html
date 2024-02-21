@@ -3,18 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/style.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="/static/sample.css">
+    <title>sample1</title>
 </head>
 <body>
-    <a>
-        とりあえずdataを表示するところまで
-        home.html
-        {% for data in get_data %}
-        <p>time:{{ data.time }}  condition:{{ data.condition }}</p>
+    <!----------------datas = [{ "time" : '?' , "condition" : '?' },{ "time" : '?' , "condition" : '?' }........]---------------->
+    <div id="navArea">
+        <nav>
+            <div class="inner">
+                <ul>
+                    <li><a href="/">home</a></li>
+                    <li><a href="{{ url_for('sample2') }}">sample2</a></li>
+                    <li><a href="{{ url_for('sample3') }}">sample3</a></li>
+                </ul>
+            </div>
+        </nav>
 
-        {% endfor %}
-    </a>
-    <script src="/static/script.js"></script>
+        <div class="toggle-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div id="mask"></div>
+
+        <main>
+            <h1>
+                sample1
+                {% for data in get_data %}
+                <p>time:{{ data.time }}  condition:{{ data.condition }}</p>
+                {% endfor %}
+            </h1>
+        </main>
+    </div>
+
+
+
+    <script src="/static/sample.js"></script>
 </body>
 </html>
