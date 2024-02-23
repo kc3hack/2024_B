@@ -18,7 +18,7 @@ import func
 
 app = Flask(__name__)
 
-DBTABLE = ("sample1","sample2","sample3")# <---------   ここに場所追加
+DBTABLE = ("sample1","sample2","sample3","嵐山","銀閣寺","本願寺","智積院","伏見稲荷","花見小路","北野天満宮","天橋立")# <---------   ここに場所追加
 TXT_LOG = 'history.log'
 DATABASE = 'DB.db'
 
@@ -78,22 +78,12 @@ def sample2():
     PLACE="sample2"#欲しいデータのテーブル名 ((DBNAMEで設定した中から))
     data = []
     if request.method=='POST':
-
-#####################################################################################################
-######################## この間の文を複製することで任意の数の時刻のデータを取得 ########################
-
         TIME='2024/02/21 13:03:17'#欲しい時間を指定
         data = func.receiveData(PLACE,TIME,data)
-
-######################## この間の文を複製することで任意の数の時刻のデータを取得 ########################
-####################################################################################################
-
         func.WriteLog("POST","/sample2","connect web site.")
         return render_template("sample2.html" , get_data=data)#アクセスするhtmlファイルを設定
+
     else:
-
-        """"""""""""""""""""""""" '''GET'''メソッドでアクセスされたら最新のものを取得 """""""""""""""""""""""""
-
         func.receiveData_latest(PLACE,data)
         func.WriteLog("GET","/sample2","connect web site.")
         return render_template("sample2.html" , get_data=data)#アクセスするhtmlファイルを設定
@@ -104,25 +94,161 @@ def sample3():
     PLACE="sample3"#欲しいデータのテーブル名 ((DBNAMEで設定した中から))
     data = []
     if request.method=='POST':
+        TIME='2024/02/21 13:03:27'#欲しい時間を指定
+        data = func.receiveData(PLACE,TIME,data)
+        func.WriteLog("POST","/sample3","connect web site.")
+        return render_template("sample3.html" , get_data=data)#アクセスするhtmlファイルを設定
+
+    else:
+        func.receiveData_latest(PLACE,data)
+        func.WriteLog("GET","/sample3","connect web site.")
+        return render_template("sample3.html" , get_data=data)#アクセスするhtmlファイルを設定
+
+
+@app.route("/嵐山",methods=['GET','POST'])
+def 嵐山():
+    PLACE="嵐山"#欲しいデータのテーブル名 ((DBNAMEで設定した中から))
+    data = []
+    if request.method=='POST':
 
 #####################################################################################################
 ######################## この間の文を複製することで任意の数の時刻のデータを取得 ########################
 
-        TIME='2024/02/21 13:03:27'#欲しい時間を指定
+
+        TIME='2024/02/21 13:03:03'#欲しい時間を指定
         data = func.receiveData(PLACE,TIME,data)
 
 ######################## この間の文を複製することで任意の数の時刻のデータを取得 ########################
 ####################################################################################################
 
-        func.WriteLog("POST","/sample3","connect web site.")
-        return render_template("sample3.html" , get_data=data)#アクセスするhtmlファイルを設定
+        func.WriteLog("POST","/嵐山","connect web site.")
+        return render_template("嵐山.html" , get_data=data)#アクセスするhtmlファイルを設定
     else:
 
         """"""""""""""""""""""""" '''GET'''メソッドでアクセスされたら最新のものを取得 """""""""""""""""""""""""
 
         func.receiveData_latest(PLACE,data)
-        func.WriteLog("GET","/sample3","connect web site.")
-        return render_template("sample3.html" , get_data=data)#アクセスするhtmlファイルを設定
+        func.WriteLog("GET","/嵐山","connect web site.")
+        return render_template("嵐山.html" , get_data=data)#アクセスするhtmlファイルを設定
+
+
+@app.route("/銀閣寺",methods=['GET','POST'])
+def 銀閣寺():
+    PLACE="銀閣寺"#欲しいデータのテーブル名 ((DBNAMEで設定した中から))
+    data = []
+    if request.method=='POST':
+        TIME='2024/02/21 13:03:03'#欲しい時間を指定
+        data = func.receiveData(PLACE,TIME,data)
+        func.WriteLog("POST","/銀閣寺","connect web site.")
+        return render_template("銀閣寺.html" , get_data=data)#アクセスするhtmlファイルを設定
+
+    else:
+        func.receiveData_latest(PLACE,data)
+        func.WriteLog("GET","/銀閣寺","connect web site.")
+        return render_template("銀閣寺.html" , get_data=data)#アクセスするhtmlファイルを設定
+
+
+@app.route("/本願寺",methods=['GET','POST'])
+def 本願寺():
+    PLACE="本願寺"#欲しいデータのテーブル名 ((DBNAMEで設定した中から))
+    data = []
+    if request.method=='POST':
+        TIME='2024/02/21 13:03:03'#欲しい時間を指定
+        data = func.receiveData(PLACE,TIME,data)
+        func.WriteLog("POST","/本願寺","connect web site.")
+        return render_template("本願寺.html" , get_data=data)#アクセスするhtmlファイルを設定
+
+    else:
+        func.receiveData_latest(PLACE,data)
+        func.WriteLog("GET","/本願寺","connect web site.")
+        return render_template("本願寺.html" , get_data=data)#アクセスするhtmlファイルを設定
+
+
+
+
+@app.route("/智積院",methods=['GET','POST'])
+def 智積院():
+    PLACE="智積院"#欲しいデータのテーブル名 ((DBNAMEで設定した中から))
+    data = []
+    if request.method=='POST':
+        TIME='2024/02/21 13:03:03'#欲しい時間を指定
+        data = func.receiveData(PLACE,TIME,data)
+        func.WriteLog("POST","/智積院","connect web site.")
+        return render_template("智積院.html" , get_data=data)#アクセスするhtmlファイルを設定
+
+    else:
+        func.receiveData_latest(PLACE,data)
+        func.WriteLog("GET","/智積院","connect web site.")
+        return render_template("智積院.html" , get_data=data)#アクセスするhtmlファイルを設定
+
+
+@app.route("/伏見稲荷",methods=['GET','POST'])
+def 伏見稲荷():
+    PLACE="伏見稲荷"#欲しいデータのテーブル名 ((DBNAMEで設定した中から))
+    data = []
+    if request.method=='POST':
+        TIME='2024/02/21 13:03:03'#欲しい時間を指定
+        data = func.receiveData(PLACE,TIME,data)
+        func.WriteLog("POST","/伏見稲荷","connect web site.")
+        return render_template("伏見稲荷.html" , get_data=data)#アクセスするhtmlファイルを設定
+
+    else:
+        func.receiveData_latest(PLACE,data)
+        func.WriteLog("GET","/伏見稲荷","connect web site.")
+        return render_template("伏見稲荷.html" , get_data=data)#アクセスするhtmlファイルを設定
+
+
+@app.route("/花見小路",methods=['GET','POST'])
+def 花見小路():
+    PLACE="花見小路"#欲しいデータのテーブル名 ((DBNAMEで設定した中から))
+    data = []
+    if request.method=='POST':
+        TIME='2024/02/21 13:03:03'#欲しい時間を指定
+        data = func.receiveData(PLACE,TIME,data)
+        func.WriteLog("POST","/花見小路","connect web site.")
+        return render_template("花見小路.html" , get_data=data)#アクセスするhtmlファイルを設定
+
+    else:
+        func.receiveData_latest(PLACE,data)
+        func.WriteLog("GET","/花見小路","connect web site.")
+        return render_template("花見小路.html" , get_data=data)#アクセスするhtmlファイルを設定
+
+
+@app.route("/北野天満宮",methods=['GET','POST'])
+def 北野天満宮():
+    PLACE="北野天満宮"#欲しいデータのテーブル名 ((DBNAMEで設定した中から))
+    data = []
+    if request.method=='POST':
+        TIME='2024/02/21 13:03:03'#欲しい時間を指定
+        data = func.receiveData(PLACE,TIME,data)
+        func.WriteLog("POST","/北野天満宮","connect web site.")
+        return render_template("北野天満宮.html" , get_data=data)#アクセスするhtmlファイルを設定
+
+    else:
+        func.receiveData_latest(PLACE,data)
+        func.WriteLog("GET","/北野天満宮","connect web site.")
+        return render_template("北野天満宮.html" , get_data=data)#アクセスするhtmlファイルを設定
+
+
+@app.route("/天橋立",methods=['GET','POST'])
+def 天橋立():
+    PLACE="天橋立"#欲しいデータのテーブル名 ((DBNAMEで設定した中から))
+    data = []
+    if request.method=='POST':
+        TIME='2024/02/21 13:03:03'#欲しい時間を指定
+        data = func.receiveData(PLACE,TIME,data)
+        func.WriteLog("POST","/天橋立","connect web site.")
+        return render_template("天橋立.html" , get_data=data)#アクセスするhtmlファイルを設定
+
+    else:
+        func.receiveData_latest(PLACE,data)
+        func.WriteLog("GET","/天橋立","connect web site.")
+        return render_template("天橋立.html" , get_data=data)#アクセスするhtmlファイルを設定
+
+
+
+
+
 
 #####################################################################################################################################################################
 ##################################################################   以上にルーティングする場所を追加   ###############################################################
