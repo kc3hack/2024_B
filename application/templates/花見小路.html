@@ -28,7 +28,7 @@
                     <span class="title">sample2</span>
                 </a>
             </li>
-            <li class="list active">
+            <li class="list">
                 <a href="{{ url_for('sample3') }}">
                     <span class="icon"><ion-icon name="radio-button-off-outline"></ion-icon></span>
                     <span class="title">sample3</span>
@@ -64,7 +64,7 @@
                     <span class="title">伏見稲荷大社</span>
                 </a>
             </li>
-            <li class="list">
+            <li class="list active">
                 <a href="{{ url_for('花見小路') }}">
                     <span class="icon"><ion-icon name="radio-button-off-outline"></ion-icon></span>
                     <span class="title">花見小路</span>
@@ -86,7 +86,7 @@
     </div>
     <main>
         <h1>
-                sample3
+                花見小路
                 {% for data in get_data %}
                 <p>time:{{ data.time }}  condition:{{ data.condition }}</p>
                 {% endfor %}

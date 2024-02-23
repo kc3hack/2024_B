@@ -3,42 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/sample.css">
-    <title>sample2</title>
+    <title>sample</title>
+    <link rel="stylesheet" href="/static/sample11.css">
 </head>
+
 <body>
-    <!----------------datas = [{ "time" : '?' , "condition" : '?' },{ "time" : '?' , "condition" : '?' }........]---------------->
-    <div id="navArea">
-        <nav>
-            <div class="inner">
-                <ul>
-                    <li><a href="/">home</a></li>
-                    <li><a href="{{ url_for('sample1') }}">sample1</a></li>
-                    <li><a href="{{ url_for('sample3') }}">sample3</a></li>
-                </ul>
-            </div>
-        </nav>
-
-        <div class="toggle-btn">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-
-        <div id="mask"></div>
-
-        <main>
-            <h1>
+    <div class = "navigation">
+        <ul>
+            <li class="list">
+                <a href="/">
+                    <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                    <span class="title">home</span>
+                </a>
+            </li>
+            <li class="list">
+                <a href="{{ url_for('sample1') }}">
+                    <span class="icon"><ion-icon name="radio-button-off-outline"></ion-icon></span>
+                    <span class="title">sample1</span>
+                </a>
+            </li>
+            <li class="list active">
+                <a href="{{ url_for('sample2') }}">
+                    <span class="icon"><ion-icon name="radio-button-off-outline"></ion-icon></span>
+                    <span class="title">sample2</span>
+                </a>
+            </li>
+            <li class="list">
+                <a href="{{ url_for('sample3') }}">
+                    <span class="icon"><ion-icon name="radio-button-off-outline"></ion-icon></span>
+                    <span class="title">sample3</span>
+                </a>
+            </li>
+            <li class="list">
+                <a href="{{ url_for('嵐山') }}">
+                    <span class="icon"><ion-icon name="radio-button-off-outline"></ion-icon></span>
+                    <span class="title">嵐山</span>
+                </a>
+            </li>
+            <li class="list">
+                <a href="{{ url_for('銀閣寺') }}">
+                    <span class="icon"><ion-icon name="radio-button-off-outline"></ion-icon></span>
+                    <span class="title">銀閣寺</span>
+                </a>
+            </li>
+            <li class="list">
+                <a href="{{ url_for('本願寺') }}">
+                    <span class="icon"><ion-icon name="radio-button-off-outline"></ion-icon></span>
+                    <span class="title">本願寺</span>
+                </a>
+            </li>
+            <li class="list">
+                <a href="{{ url_for('智積院') }}">
+                    <span class="icon"><ion-icon name="radio-button-off-outline"></ion-icon></span>
+                    <span class="title">智積院</span>
+                </a>
+            </li>
+            <li class="list">
+                <a href="{{ url_for('伏見稲荷') }}">
+                    <span class="icon"><ion-icon name="radio-button-off-outline"></ion-icon></span>
+                    <span class="title">伏見稲荷大社</span>
+                </a>
+            </li>
+            <li class="list">
+                <a href="{{ url_for('花見小路') }}">
+                    <span class="icon"><ion-icon name="radio-button-off-outline"></ion-icon></span>
+                    <span class="title">花見小路</span>
+                </a>
+            </li>
+            <li class="list">
+                <a href="{{ url_for('北野天満宮') }}">
+                    <span class="icon"><ion-icon name="radio-button-off-outline"></ion-icon></span>
+                    <span class="title">北野天満宮</span>
+                </a>
+            </li>
+            <li class="list">
+                <a href="{{ url_for('天橋立') }}">
+                    <span class="icon"><ion-icon name="radio-button-off-outline"></ion-icon></span>
+                    <span class="title">天橋立</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <main>
+        <h1>
                 sample2
                 {% for data in get_data %}
                 <p>time:{{ data.time }}  condition:{{ data.condition }}</p>
                 {% endfor %}
-            </h1>
-        </main>
-    </div>
+        </h1>
+    </main>
 
 
 
-    <script src="/static/sample.js"></script>
+
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+        const list =document.querySelectorAll(".list");
+        console.log(list);
+
+        function activeLink() {
+            list.forEach(item => {
+                item.classList.remove("active")
+            })
+            this.classList.add("active");
+        }
+
+        list.forEach((item) => {
+            item.addEventListener("click", activeLink);
+        });
+    </script>
 </body>
 </html>
