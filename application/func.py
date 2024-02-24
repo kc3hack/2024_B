@@ -12,7 +12,7 @@ import json
 
 TXT_LOG = 'history.log'
 DATABASE = 'DB.db'
-PASSKEY = "123456789"
+PASSKEY = "1111"
 
 
 def create_db(DBNAME):#任意のテーブルを作成する関数
