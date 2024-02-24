@@ -1,5 +1,7 @@
 import sqlite3
 import datetime
+import requests
+import json
 
 #############################################################################################################################################################################
 ################################################################# ここはapp.pyで使用する関数があるファイルです #################################################################
@@ -48,3 +50,17 @@ def receiveData_latest(PLACE,data):#DBから任意のテーブルの最新のデ
     con.close()
     data.append({"time": db_data[0][1], "condition": db_data[0][2]})
     return data
+
+def postData(PLASE,conditon):
+    url = "http://localhost:5000/"+"write_date/ここはデータベース書き込み用のURLです"
+
+    time = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')
+
+    data = {"place": PLASE, "condition": conditon, "time": time}
+
+
+    headers = {"Content-type": "application/json"}
+
+    response = requests.post(url, data=json.dumps(data), headers=headers)
+
+    print(response.json())# <- ((true or false))
