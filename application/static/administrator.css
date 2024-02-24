@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+.password-container {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    font-size: 20px;
+    left: 56.5%;
+    top: 30%;
+    transform: translateY(-50%, -50%);
+    cursor: pointer;
+}
