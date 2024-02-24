@@ -9,7 +9,16 @@
 <body>
     ここは管理者用ページです
     {% for data in get_data %}
-    <p>place:{{ data.place.ljust(10) }}　　time:{{ data.time.ljust(10) }}　　rich:{{ data.rich.ljust(10) }}</p>
+    {% if data.place == "嵐山" %}
+    <p>place:　　　　{{ data.place }}　　time:{{ data.time }}　　rich:{{ data.rich }}</p>
+
+    {% elif data.place == "北野天満宮" %}
+    <p>place:　{{ data.place }}　　time:{{ data.time }}　　rich:{{ data.rich }}</p>
+    {% elif data.place == "伏見稲荷" or data.place == "花見小路" %}
+    <p>place:　　{{ data.place }}　　time:{{ data.time }}　　rich:{{ data.rich }}</p>
+    {% else %}
+    <p>place:　　　{{ data.place }}　　time:{{ data.time }}　　rich:{{ data.rich }}</p>
+    {% endif %}
     {% endfor %}
     <a href="{{ url_for('logout') }}" class="btn">ログアウト</a>
 </body>
