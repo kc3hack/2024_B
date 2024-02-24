@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sample</title>
     <link rel="stylesheet" href="/static/sample11.css">
+    <link rel="stylesheet" href="/static/administrator.css">
 </head>
 
 <body>
@@ -17,21 +18,9 @@
                 </a>
             </li>
             <li class="list">
-                <a href="{{ url_for('sample1') }}">
+                <a href="{{ url_for('test') }}">
                     <span class="icon"><ion-icon name="radio-button-off-outline"></ion-icon></span>
-                    <span class="title">sample1</span>
-                </a>
-            </li>
-            <li class="list">
-                <a href="{{ url_for('sample2') }}">
-                    <span class="icon"><ion-icon name="radio-button-off-outline"></ion-icon></span>
-                    <span class="title">sample2</span>
-                </a>
-            </li>
-            <li class="list">
-                <a href="{{ url_for('sample3') }}">
-                    <span class="icon"><ion-icon name="radio-button-off-outline"></ion-icon></span>
-                    <span class="title">sample3</span>
+                    <span class="title">test</span>
                 </a>
             </li>
             <li class="list">
@@ -86,10 +75,21 @@
     </div>
     <main>
         <h1>
-                ホーム
-                {% for data in get_data %}
-                <p>time:{{ data.time }}  condition:{{ data.condition }}</p>
-                {% endfor %}
+            ホーム
+            {% for data in get_data %}
+            <p>time:{{ data.time }}  condition:{{ data.condition }}</p>
+            {% endfor %}
+            <form method="POST">
+                <div class="password-container">
+                    <label for="password">
+                        {% if msg=="2" %}
+                        passkey error!
+                        {% endif %}
+                    </label>
+                    <input type="password" name="password" id="passwordInput" placeholder="パスキーを入力">
+                    <input type="submit" value="Enter">
+                </div>
+            </form>
         </h1>
     </main>
 
