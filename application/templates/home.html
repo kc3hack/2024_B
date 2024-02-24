@@ -79,18 +79,19 @@
             {% for data in get_data %}
             <p>time:{{ data.time }}  condition:{{ data.condition }}</p>
             {% endfor %}
-            <form method="POST">
-                <div class="password-container">
-                    <label for="password">
-                        {% if msg=="2" %}
-                        passkey error!
-                        {% endif %}
-                    </label>
-                    <input type="password" name="password" id="passwordInput" placeholder="パスキーを入力">
-                    <input type="submit" value="Enter">
-                </div>
-            </form>
+
         </h1>
+        <form method="POST">
+            <div class="password-container">
+                <label for="password">
+                    {% if msg=="2" %}
+                    passkey error!
+                    {% endif %}
+                </label>
+                <input type="password" name="password" id="passwordInput" placeholder="パスキーを入力">
+                <input type="submit" value="Enter">
+            </div>
+        </form>
     </main>
 
 

@@ -1,15 +1,18 @@
 @charset "UTF-8";
 
-.password-container {
-    position: relative;
-    z-index: -1;
+body {
+    text-align: right;
 }
 
-.toggle-password {
-    position: absolute;
-    font-size: 20px;
-    left: 56.5%;
-    top: 30%;
-    transform: translateY(-50%, -50%);
-    cursor: pointer;
+form {
+    display: inline-block; /* 右寄せを有効にするために必要 */
+    width: 50%;
+    left: 100%;
+}
+
+
+.password-container {
+    position: relative;
+    
+
 }
