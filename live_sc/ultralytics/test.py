@@ -10,7 +10,14 @@ import os
 from bs4 import BeautifulSoup
 import hito
 
-def capture_screenshots(target_string):
+global TIME
+global place
+
+def capture_screenshots(target_string, time):
+    global TIME
+    global place
+    TIME = time
+    place = target_string
     # Chromeドライバーのパス
     #CHROMEDRIVER_PATH = "./chromedriver.exe"
     # ライブストリームURLの辞書
@@ -129,13 +136,10 @@ def capture_screenshots(target_string):
 
 ####################################################################
 # # 実行例
-# IMG = capture_screenshots("伏見稲荷")
+IMG = capture_screenshots("伏見稲荷")
 # print(IMG)
 # print("人物検出")
-# hito.process(IMG)
-# print(IMG)
-# IMG.show()
-# # 各スクリーンショットを表示する
-# for idx, screenshot in enumerate(screenshots):
-#     screenshot.show()
+hito.process(IMG)
+
+hito.analyze(place,TIME,IMG)
 
