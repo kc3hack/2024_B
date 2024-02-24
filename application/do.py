@@ -10,3 +10,8 @@ schedule.every(1).minutes.do(get)# <- 関数とか、なんなら上に関数追
 
 while True:
     schedule.run_pending()
+
+import sys
+sys.path.append('live_sc')  # live_scディレクトリをモジュール検索パスに追加
+
+import ファイル名  # ファイル名はlive_scディレクトリ内のPythonファイル名
