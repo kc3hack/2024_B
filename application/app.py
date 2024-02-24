@@ -18,6 +18,7 @@ import func
 
 app = Flask(__name__)
 
+
 DBTABLE = ("sample1","sample2","sample3","嵐山","銀閣寺","本願寺","智積院","伏見稲荷","花見小路","北野天満宮","天橋立")# <---------   ここに場所追加
 TXT_LOG = 'history.log'
 DATABASE = 'DB.db'
@@ -255,17 +256,18 @@ def 天橋立():
 #####################################################################################################################################################################
 
 @app.route("/write_date/ここはデータベース書き込み用のURLです", methods=["POST"])#DB書き込み
-def write_date():
+def ここはデータベース書き込み用のURLです():
     try:
         #ここはデータの受け取り方によって """PLACE""" , """condition""" を書き換える
 
 
         #maybe 画像検出用の.pyファイルがあるならimport文でヨシ
         #      リクエスト受けて書き込むなら
-        data = request.get_json()
-        PLACE = data.get("place", "default_PLACE")
-        condition = data.get("condition", "default_condition")
 
+        data = request.get_json()
+        PLACE = data.get("place", "XXX")
+        condition = data.get("condition", "XXX")
+        time = data.get("time","XXXX/XX/XX XX:XX:XX")
 
 ###################################################################################
 ################################   ただしjson形式   ################################
@@ -273,7 +275,7 @@ def write_date():
 
         #PLACE = "place"
         #condition ="condition"
-        time = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')
+
 
         func.WriteData(PLACE,time,condition)
         func.WriteLog("POST","/"+PLACE,"add DATA success!")
