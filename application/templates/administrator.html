@@ -7,10 +7,10 @@
 </head>
 
 <body>
-        ここは管理者用ページです
-        {% for data in get_data %}
-        <p>time:{{ data.time }}  condition:{{ data.condition }}</p>
-        {% endfor %}
-        <a href="{{ url_for('logout') }}" class="btn">ログアウト</a>
+    ここは管理者用ページです
+    {% for data in get_data %}
+    <p>place:{{ data.place.ljust(10) }}　　time:{{ data.time.ljust(10) }}　　rich:{{ data.rich.ljust(10) }}</p>
+    {% endfor %}
+    <a href="{{ url_for('logout') }}" class="btn">ログアウト</a>
 </body>
 </html>
