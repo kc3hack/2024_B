@@ -3,6 +3,7 @@ import datetime
 import requests
 import json
 
+
 #############################################################################################################################################################################
 ################################################################# ここはapp.pyで使用する関数があるファイルです #################################################################
 #############################################################################################################################################################################
@@ -11,6 +12,7 @@ import json
 
 TXT_LOG = 'history.log'
 DATABASE = 'DB.db'
+PASSKEY = "123456789"
 
 
 def create_db(DBNAME):#任意のテーブルを作成する関数
@@ -51,16 +53,5 @@ def receiveData_latest(PLACE,data):#DBから任意のテーブルの最新のデ
     data.append({"time": db_data[0][1], "condition": db_data[0][2]})
     return data
 
-def postData(PLASE,conditon):
-    url = "http://localhost:5000/"+"write_date/ここはデータベース書き込み用のURLです"
-
-    time = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')
-
-    data = {"place": PLASE, "condition": conditon, "time": time}
-
-
-    headers = {"Content-type": "application/json"}
-
-    response = requests.post(url, data=json.dumps(data), headers=headers)
-
-    print(response.json())# <- ((true or false))
+def check_passkey(passkey):
+    return passkey==PASSKEY
