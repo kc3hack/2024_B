@@ -258,25 +258,10 @@ def 天橋立():
 @app.route("/write_date/ここはデータベース書き込み用のURLです", methods=["POST"])#DB書き込み
 def ここはデータベース書き込み用のURLです():
     try:
-        #ここはデータの受け取り方によって """PLACE""" , """condition""" を書き換える
-
-
-        #maybe 画像検出用の.pyファイルがあるならimport文でヨシ
-        #      リクエスト受けて書き込むなら
-
         data = request.get_json()
         PLACE = data.get("place", "XXX")
         condition = data.get("condition", "XXX")
         time = data.get("time","XXXX/XX/XX XX:XX:XX")
-
-###################################################################################
-################################   ただしjson形式   ################################
-####################################################################################
-
-        #PLACE = "place"
-        #condition ="condition"
-
-
         func.WriteData(PLACE,time,condition)
         func.WriteLog("POST","/"+PLACE,"add DATA success!")
         return jsonify({"result": True})
