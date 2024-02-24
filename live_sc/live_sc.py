@@ -11,7 +11,7 @@ import os
 CHROMEDRIVER_PATH = "./chromedriver.exe"
 
 # YouTubeのライブストリームURL
-LIVESTREAM_URL = "https://www.youtube.com/watch?v=CO_ZjH6N7RE"
+LIVESTREAM_URL = "https://www.youtube.com/watch?v=Op-lf2NRMzs&t=0s"
 
 # スクリーンショットの保存先ディレクトリ
 SCREENSHOT_DIR = "./screenshots/"
