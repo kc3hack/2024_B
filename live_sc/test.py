@@ -7,6 +7,11 @@ from io import BytesIO
 import requests
 import time
 import os
+from bs4 import BeautifulSoup
+# HTMLをダウンロード
+
+
+#import YOLO
 
 def capture_screenshots(target_string):
     # Chromeドライバーのパス
@@ -25,12 +30,13 @@ def capture_screenshots(target_string):
         "天橋立": "https://www.youtube.com/watch?v=ZCWMo8yzWT0",
         "ねねの道": "https://www.youtube.com/watch?v=Gxt3YCa2Phc",
         "北野天満宮": "https://www.youtube.com/watch?v=KHglGodzQ9g",
+        "銀閣寺":"https://www.shokoku-ji.jp/read_live_camera_image/?src=/img/webcam/ginkaku/full/ginkaku01.jpg",
         # 他の特定の文字列に対するURLを追加
     }
 
     # 対応するURLを取得
     url = URLS.get(target_string)
-    #print("今は"+url)
+    print("今は"+url)
     # もしURLが存在しない場合は終了
     if url is None:
         print(f"URL for {target_string} is not found.")
@@ -38,36 +44,52 @@ def capture_screenshots(target_string):
 
     # ブラウザを起動
     driver = webdriver.Chrome()
+    screenshots = []  # ここにスクリーンショットを追加していく
     try:
-        if target_string == "本願寺":
+        if target_string == "本願寺" :
+            
             # 画像を取得するURL
-            IMAGE_URL = "https://hongwanji-live.securesite.jp/camera/camera01.jpg"
-
+            #IMAGE_URL = "https://hongwanji-live.securesite.jp/camera/camera01.jpg"
             # 保存先ファイルパスを作成
-            os.makedirs(SAVE_DIR, exist_ok=True)
-            print(IMAGE_URL+"\n")
-            print(url)
+            #os.makedirs(SAVE_DIR, exist_ok=True)
+            # print(IMAGE_URL+"\n")
+            # print(url)
+            
+            
+           
             try:
-                while True:
+                if target_string == "本願寺":
+                    # 画像を取得するURL
+                    #IMAGE_URL = "https://www.shokoku-ji.jp/read_live_camera_image/?src=/img/webcam/ginkaku/full/ginkaku01.jpg"
+
                     # 画像を取得
                     response = requests.get(url)
                     if response.status_code == 200:
-                        # 画像を保存
-                        timestamp = time.strftime("%Y%m%d%H%M")
-                        filename = f"image_{timestamp}.jpg"
-                        image_path = os.path.join(SAVE_DIR, filename)
-                        with open(image_path, 'wb') as f:
-                            f.write(response.content)
-                        print(f"Image saved: {image_path}")
-
-                    # 10秒待機
-                    time.sleep(10)
+                        # 取得した画像を直接返す
+                        img = Image.open(BytesIO(response.content))
+                        return img
             except KeyboardInterrupt:
                 print("Program terminated by user.")
+                
+        if target_string == "銀閣寺":
+            try:
+                # 画像のURL
+                #image_url = "https://www.shokoku-ji.jp/read_live_camera_image/?src=/img/webcam/ginkaku/full/ginkaku01.jpg"
+                # 画像を取得
+                response = requests.get(url)
+                # 取得した画像を開く
+                if response.status_code == 200:
+                    img = Image.open(BytesIO(response.content))
+                    return img
+                else:
+                     print("Failed to fetch image")
+            except KeyboardInterrupt:
+                print("Program terminated by user.")
+        
         else:
-            screenshots = []  # ここにスクリーンショットを追加していく
-
-            while True:
+            
+            count = 1
+            while count < 2:
                 try:
                     # YouTubeのライブストリームページを開く
                     driver.get(url)
@@ -86,9 +108,9 @@ def capture_screenshots(target_string):
                     size = video_element.size
 
                     location['y'] += 80
-
+                    time.sleep(10)
                     count = 1
-                    while True:
+                    while count < 2:
                         try:
                             # スクリーンショットを取得して保存
                             screenshot = driver.get_screenshot_as_png()
@@ -115,16 +137,23 @@ def capture_screenshots(target_string):
         # ブラウザを閉じる
         driver.quit()
     
-    return screenshots  # スクリーンショットのリストを返す
+    img = screenshots[0] if screenshots else None
+
+    return img  
 
 # 他のプログラムから呼び出す際に文字列を引数として渡す
 # 嵐山という文字列を引数として渡す
 
 
 # スクリーンショットのリストを読み込む
-screenshots = capture_screenshots("天橋立")
+IMG = capture_screenshots("本願寺")
+#print(IMG)
+#IMG.show()
 
-# 各スクリーンショットを表示する
-for idx, screenshot in enumerate(screenshots):
-    screenshot.show()
+
+
+
+# # 各スクリーンショットを表示する
+# for idx, screenshot in enumerate(screenshots):
+#     screenshot.show()
 
