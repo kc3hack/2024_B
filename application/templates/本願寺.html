@@ -74,9 +74,9 @@
     </div>
     <main>
         <h1>
-                本願寺
+                本願寺付近
                 {% for data in get_data %}
-                <p>time:{{ data.time }}  condition:{{ data.condition }}</p>
+                <p>現在の時刻:{{ data.time }}  混雑具合:{{ data.condition }}</p>
                 {% endfor %}
         </h1>
     </main>
