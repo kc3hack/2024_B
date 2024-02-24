@@ -6,6 +6,7 @@ import func
 
 
 
+
 # .venv\Scripts\activate.bat 有効化
 
 
@@ -21,8 +22,10 @@ app=Flask(__name__)
 app.secret_key = b"efb94fcefa1ef7f281d69a979cdf251b2b9bdd8b770d7a0fbfb9427287fec9f6"
 #app1= Blueprint('app',__name__,template_folder='templates')
 
+def pad_filter(s, width):
+    return str(s).ljust(width)
 
-DBTABLE = ("test","嵐山","銀閣寺","本願寺","智積院","伏見稲荷","花見小路","北野天満宮","天橋立")# <---------   ここに場所追加
+DBTABLE = ("test","　　　　嵐山","　　　銀閣寺","　　　本願寺","　　　智積院","　　伏見稲荷","　　花見小路","　北野天満宮","　　　天橋立")# <---------   ここに場所追加
 TXT_LOG = 'history.log'
 DATABASE = 'DB.db'
 
@@ -58,13 +61,17 @@ def top():
 @app.route("/administrator")
 @login_required
 def administrator():
-    return render_template("administrator.html")
+    data=[]
+    for NAME in DBTABLE:
+        func.receiveRichData_latest(NAME,data)
+    print(data)
+    return render_template("administrator.html",get_data=data)
 
 
 @app.route("/logout")
 def logout():
     session.clear()
-    return render_template("home.html")
+    return redirect("/")
 
 
 #####################################################################################################################################################################
@@ -100,7 +107,7 @@ def test():
 
 @app.route("/嵐山",methods=['GET','POST'])
 def 嵐山():
-    PLACE="嵐山"
+    PLACE="　　　　嵐山"
     data = []
     if request.method=='POST':
         TIME='2024/02/21 13:03:03'
@@ -116,7 +123,7 @@ def 嵐山():
 
 @app.route("/銀閣寺",methods=['GET','POST'])
 def 銀閣寺():
-    PLACE="銀閣寺"
+    PLACE="　　　銀閣寺"
     data = []
     if request.method=='POST':
         TIME='2024/02/21 13:03:03'
@@ -132,7 +139,7 @@ def 銀閣寺():
 
 @app.route("/本願寺",methods=['GET','POST'])
 def 本願寺():
-    PLACE="本願寺"
+    PLACE="　　　本願寺"
     data = []
     if request.method=='POST':
         TIME='2024/02/21 13:03:03'
@@ -146,11 +153,9 @@ def 本願寺():
         return render_template("本願寺.html" , get_data=data)
 
 
-
-
 @app.route("/智積院",methods=['GET','POST'])
 def 智積院():
-    PLACE="智積院"
+    PLACE="　　　智積院"
     data = []
     if request.method=='POST':
         TIME='2024/02/21 13:03:03'
@@ -166,7 +171,7 @@ def 智積院():
 
 @app.route("/伏見稲荷",methods=['GET','POST'])
 def 伏見稲荷():
-    PLACE="伏見稲荷"
+    PLACE="　　伏見稲荷"
     data = []
     if request.method=='POST':
         TIME='2024/02/21 13:03:03'
@@ -182,7 +187,7 @@ def 伏見稲荷():
 
 @app.route("/花見小路",methods=['GET','POST'])
 def 花見小路():
-    PLACE="花見小路"
+    PLACE="　　花見小路"
     data = []
     if request.method=='POST':
         TIME='2024/02/21 13:03:03'
@@ -198,7 +203,7 @@ def 花見小路():
 
 @app.route("/北野天満宮",methods=['GET','POST'])
 def 北野天満宮():
-    PLACE="北野天満宮"
+    PLACE="　北野天満宮"
     data = []
     if request.method=='POST':
         TIME='2024/02/21 13:03:03'
@@ -214,7 +219,7 @@ def 北野天満宮():
 
 @app.route("/天橋立",methods=['GET','POST'])
 def 天橋立():
-    PLACE="天橋立"
+    PLACE="　　　天橋立"
     data = []
     if request.method=='POST':
         TIME='2024/02/21 13:03:03'
@@ -241,7 +246,8 @@ def ここはデータベース書き込み用のURLです():
         PLACE = data.get("place", "XXX")
         condition = data.get("condition", "XXX")
         time = data.get("time","XXXX/XX/XX XX:XX:XX")
-        func.WriteData(PLACE,time,condition)
+        rich=data.get("rich","XXX")
+        func.WriteData(PLACE,time,condition,rich)
         func.WriteLog("POST","/"+PLACE,"add DATA success!")
         return jsonify({"result": True})
     except:
