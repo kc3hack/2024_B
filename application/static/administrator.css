@@ -2,6 +2,7 @@
 
 .password-container {
     position: relative;
+    z-index: -1;
 }
 
 .toggle-password {
