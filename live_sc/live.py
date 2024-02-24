@@ -1,12 +1,12 @@
+import time
+import os
+from PIL import Image
+from io import BytesIO
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from PIL import Image
-from io import BytesIO
 import requests
-import time
-import os
 
 def capture_screenshots(target_string):
     # Chromeドライバーのパス
@@ -30,7 +30,7 @@ def capture_screenshots(target_string):
 
     # 対応するURLを取得
     url = URLS.get(target_string)
-    #print("今は"+url)
+
     # もしURLが存在しない場合は終了
     if url is None:
         print(f"URL for {target_string} is not found.")
@@ -38,6 +38,7 @@ def capture_screenshots(target_string):
 
     # ブラウザを起動
     driver = webdriver.Chrome()
+
     try:
         if target_string == "本願寺":
             # 画像を取得するURL
@@ -45,8 +46,7 @@ def capture_screenshots(target_string):
 
             # 保存先ファイルパスを作成
             os.makedirs(SAVE_DIR, exist_ok=True)
-            print(IMAGE_URL+"\n")
-            print(url)
+
             try:
                 while True:
                     # 画像を取得
@@ -65,7 +65,8 @@ def capture_screenshots(target_string):
             except KeyboardInterrupt:
                 print("Program terminated by user.")
         else:
-            while True:
+            count = 1
+            while count <= 2:  # countが2になるまでループ
                 try:
                     # YouTubeのライブストリームページを開く
                     driver.get(url)
@@ -88,8 +89,7 @@ def capture_screenshots(target_string):
                     # スクリーンショットの保存先ディレクトリを作成
                     os.makedirs(SAVE_DIR, exist_ok=True)
 
-                    count = 1
-                    while True:
+                    while count <= 2:
                         try:
                             # スクリーンショットを取得して保存
                             screenshot = driver.get_screenshot_as_png()
@@ -103,6 +103,7 @@ def capture_screenshots(target_string):
                             time.sleep(10)  # 10秒ごとにスクリーンショットを取得
 
                             count += 1
+
                         except Exception as e:
                             print("An error occurred while taking screenshot:", e)
                             # エラーが発生した場合はページを再読み込みして続行

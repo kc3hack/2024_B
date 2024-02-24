@@ -8,6 +8,7 @@ import requests
 import time
 import os
 from bs4 import BeautifulSoup
+import hito
 # HTMLをダウンロード
 
 
@@ -143,16 +144,13 @@ def capture_screenshots(target_string):
 
 # 他のプログラムから呼び出す際に文字列を引数として渡す
 # 嵐山という文字列を引数として渡す
-
-
 # スクリーンショットのリストを読み込む
-IMG = capture_screenshots("本願寺")
+IMG = capture_screenshots("北野天満宮")
+print(IMG)
+print("人物検出")
+hito.process(IMG)
 #print(IMG)
 #IMG.show()
-
-
-
-
 # # 各スクリーンショットを表示する
 # for idx, screenshot in enumerate(screenshots):
 #     screenshot.show()
