@@ -17,21 +17,9 @@
                 </a>
             </li>
             <li class="list">
-                <a href="{{ url_for('sample1') }}">
+                <a href="{{ url_for('test') }}">
                     <span class="icon"><ion-icon name="radio-button-off-outline"></ion-icon></span>
-                    <span class="title">sample1</span>
-                </a>
-            </li>
-            <li class="list">
-                <a href="{{ url_for('sample2') }}">
-                    <span class="icon"><ion-icon name="radio-button-off-outline"></ion-icon></span>
-                    <span class="title">sample2</span>
-                </a>
-            </li>
-            <li class="list">
-                <a href="{{ url_for('sample3') }}">
-                    <span class="icon"><ion-icon name="radio-button-off-outline"></ion-icon></span>
-                    <span class="title">sample3</span>
+                    <span class="title">test</span>
                 </a>
             </li>
             <li class="list">
@@ -86,7 +74,7 @@
     </div>
     <main>
         <h1>
-                伏見稲荷
+                伏見稲荷大社
                 {% for data in get_data %}
                 <p>time:{{ data.time }}  condition:{{ data.condition }}</p>
                 {% endfor %}
