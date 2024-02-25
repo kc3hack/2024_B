@@ -10,13 +10,12 @@ import os
 from bs4 import BeautifulSoup
 import hito
 
-global TIME
-global place
+TIME = None
+place = None
 
-def capture_screenshots(target_string, time):
-    global TIME
-    global place
-    TIME = time
+def capture_screenshots(target_string, capture_time):
+    global TIME, place
+    TIME = capture_time
     place = target_string
     # Chromeドライバーのパス
     #CHROMEDRIVER_PATH = "./chromedriver.exe"
@@ -51,7 +50,7 @@ def capture_screenshots(target_string, time):
     screenshots = []  # ここにスクリーンショットを追加していく
     try:
         if target_string == "本願寺" :
-           
+
             try:
                 if target_string == "本願寺":
                     # 画像を取得
@@ -62,7 +61,7 @@ def capture_screenshots(target_string, time):
                         return img
             except KeyboardInterrupt:
                 print("Program terminated by user.")
-                
+
         if target_string == "銀閣寺":
             try:
                 # 画像のURL
@@ -77,9 +76,9 @@ def capture_screenshots(target_string, time):
                      print("Failed to fetch image")
             except KeyboardInterrupt:
                 print("Program terminated by user.")
-        
+
         else:
-            
+
             count = 1
             while count < 2:
                 try:
@@ -129,17 +128,16 @@ def capture_screenshots(target_string, time):
     finally:
         # ブラウザを閉じる
         driver.quit()
-    
+
     img = screenshots[0] if screenshots else None
 
-    return img  
+    return img
 
 ####################################################################
 # # 実行例
-IMG = capture_screenshots("伏見稲荷")
-# print(IMG)
+IMG = capture_screenshots("北野天満宮",1107)
+print(IMG)
 # print("人物検出")
 hito.process(IMG)
 
-hito.analyze(place,TIME,IMG)
-
+#hito.analyze(place,TIME,IMG)
