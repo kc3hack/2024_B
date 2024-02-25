@@ -24,9 +24,7 @@
 
 
 ## 注力したポイント
-
-<!-- 開発したプロダクトの中で、特に注力して作成した箇所・ポイントについて入力してください -->
-
+AIと画像データのウェブへの適応の時にかなりエラーが出て苦労しました。
 
 ## 使用技術
 python,flask,html,css,javascript,yolo,ultralytics,sqlite,selenium
