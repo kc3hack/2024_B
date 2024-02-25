@@ -25,7 +25,7 @@ app.secret_key = b"efb94fcefa1ef7f281d69a979cdf251b2b9bdd8b770d7a0fbfb9427287fec
 def pad_filter(s, width):
     return str(s).ljust(width)
 
-DBTABLE = ("test","嵐山","銀閣寺","本願寺","智積院","伏見稲荷","花見小路","北野天満宮","天橋立")# <---------   ここに場所追加
+DBTABLE = ("嵐山","銀閣寺","本願寺","智積院","伏見稲荷","花見小路","北野天満宮","天橋立")# <---------   ここに場所追加
 TXT_LOG = 'history.log'
 DATABASE = 'DB.db'
 
