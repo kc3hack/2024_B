@@ -30,9 +30,7 @@
 
 
 ## 使用技術
-
-<!-- 使用技術を入力してください -->
-
+python,flask,html,css,javascript,yolo,ultralytics,sqlite,selenium
 
 <!--
 markdownの記法はこちらを参照してください！
