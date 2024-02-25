@@ -68,7 +68,7 @@ def update():
     global place
     global time
     global url
-    data = {"place": place, "time": time, "condition": person_count}
+    data = {"place": place, "time": time, "condition": person_count, "rich": traveler_rate}
     headers = {"Content-type": "application/json"}
     response = requests.post(url, data=json.dumps(data), headers=headers)
     #print(response.json())
